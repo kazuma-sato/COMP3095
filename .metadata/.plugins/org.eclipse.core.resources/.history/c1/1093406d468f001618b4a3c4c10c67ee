@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+<!--
+	COMP3095 Web Application Development with Java
+	Assignment 1 - Servlets
+	Instructor : Sergio Santilli sergio.santilli@georgebrown.ca
+	
+	by Kazuma Sato 100 948 212 kazuma.sato@georgebrown.ca
+	Date: Monday, October 10, 2016
+
+	Description:
+		HTML file for login page for an online journal
+-->
+  <display-name>COMP3095 Assignment 1</display-name>
+  <description>Login Form Servlet & Registration Form Servlet</description>
+  
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  <!--  
+  <servlet>
+  	<servlet-name>registration</servlet-name>
+  	<servlet-class>register.servlet.register</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>registration</servlet-name>
+    <url-pattern>/register</url-pattern>
+  </servlet-mapping>
+  -->
+</web-app>

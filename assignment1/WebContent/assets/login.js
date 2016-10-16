@@ -9,3 +9,11 @@
 	Description:
 		JavaScript for client side authentication for login page for an online journal
  */
+ (function(){
+ 	function authenticate(){
+
+ 		function firstName(){
+ 			var firstNameDocument = getElementById(firstName).Text
+ 		}
+ 	}
+ })();

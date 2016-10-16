@@ -1,0 +1,5 @@
+package login.servlet;
+
+public class User {
+
+}

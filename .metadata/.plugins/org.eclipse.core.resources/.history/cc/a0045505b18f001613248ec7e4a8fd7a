@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <!--
+	COMP3095 Web Application Development with Java
+	Lab Test 1
+	Instructor : Sergio Santilli sergio.santilli@georgebrown.ca
+	
+	by Kazuma Sato 100 948 212 kazuma.sato@georgebrown.ca
+	Date: Monday, October 11, 2016
+
+	Description:
+		XML for Classroom Reservation
+-->
+  
+  <display-name>Class Room Reservation</display-name>
+  <welcome-file-list>
+    <welcome-file>reservationForm.html</welcome-file>
+  </welcome-file-list>
+</web-app>
