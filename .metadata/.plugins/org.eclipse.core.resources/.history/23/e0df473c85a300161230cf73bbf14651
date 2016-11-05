@@ -1,0 +1,5 @@
+package servlet.register;
+
+public class Form {
+
+}
