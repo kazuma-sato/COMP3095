@@ -25,5 +25,8 @@
     <servlet-name>HelloServ</servlet-name>
     <url-pattern>/hello_world</url-pattern>
   </servlet-mapping>
-  
+  <servlet-mapping>
+    <servlet-name>SearchEngine</servlet-name>
+    <url-pattern>/search</url-pattern>
+  </servlet-mapping>
 </web-app>

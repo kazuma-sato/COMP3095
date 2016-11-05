@@ -1,0 +1,11 @@
+127.0.0.1 - - [11/Oct/2016:08:39:26 -0400] "GET / HTTP/1.1" 404 994
+0:0:0:0:0:0:0:1 - - [11/Oct/2016:08:39:38 -0400] "GET / HTTP/1.1" 404 994
+0:0:0:0:0:0:0:1 - - [11/Oct/2016:08:39:38 -0400] "GET /favicon.ico HTTP/1.1" 404 1016
+0:0:0:0:0:0:0:1 - - [11/Oct/2016:08:39:53 -0400] "GET /reservationform.html HTTP/1.1" 404 1034
+127.0.0.1 - - [11/Oct/2016:08:40:24 -0400] "GET / HTTP/1.1" 404 994
+0:0:0:0:0:0:0:1 - - [11/Oct/2016:08:40:25 -0400] "GET /COMP3095LabTestA_SatoKazuma/reservationForm.html HTTP/1.1" 200 1914
+0:0:0:0:0:0:0:1 - - [11/Oct/2016:08:54:58 -0400] "GET /reservationform.html HTTP/1.1" 404 1034
+127.0.0.1 - - [11/Oct/2016:08:55:20 -0400] "GET / HTTP/1.1" 404 994
+0:0:0:0:0:0:0:1 - - [11/Oct/2016:08:55:20 -0400] "GET /COMP3095LabTestA_SatoKazuma/reservationForm.html HTTP/1.1" 200 2304
+0:0:0:0:0:0:0:1 - - [11/Oct/2016:08:55:31 -0400] "GET /COMP3095LabTestA_SatoKazuma/reservationForm.html HTTP/1.1" 200 2304
+0:0:0:0:0:0:0:1 - - [11/Oct/2016:09:03:02 -0400] "GET /COMP3095LabTestA_SatoKazuma/reservationForm.html HTTP/1.1" 200 2352

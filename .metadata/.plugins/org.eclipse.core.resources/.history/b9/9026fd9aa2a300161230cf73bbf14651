@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<!--
+	COMP3095 Web Application Development with Java
+	Assignment 1 - Servlets
+	Instructor : Sergio Santilli sergio.santilli@georgebrown.ca
+	
+	by Kazuma Sato 100 948 212 kazuma.sato@georgebrown.ca
+	Date: Monday, October 10, 2016
+
+	Description:
+		HTML file for registration page for an online journal
+-->
+	<head>
+		<meta charset='UTF-8'>
+		<title>Registration | Journal</title>
+		<link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Roboto'>
+		<link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Roboto+Slab'>
+		<link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Source+Code+Pro'>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				width:85%;
+				max-width:96em;
+				font-size:62.5%;
+				background-color: #333333;
+				margin: 2em auto 2em auto;
+			}
+			form{
+			 margin-left: auto;
+			 margin-right: auto;
+			}
+			fieldset{
+				border-width: 1px;
+				border-top-style: solid;
+				border-color: white;
+				padding: .5em;
+			}
+			legend, h2{
+				text-align: center;
+				font-family: 'Roboto Slab', Times, serif;
+				font-size: 36px;
+				color: white;
+			}
+			label, h3{
+				text-align: right;
+				font-family: 'Roboto Slab', Times, serif;
+				font-size: 24px;
+				color: #75a3d1;
+			}
+			.error{
+				font-family: 'Roboto Slab', Times, serif;
+				font-size: 24px;
+				color: #E05151;
+			}
+			input, select{
+				border: solid;
+				border-width: 1px;
+				border-color: white;
+				background-color: #555555;
+				padding: .25em;
+				margin: .25em;
+				font-family: 'Source Code Pro', Courier, monospace;
+				font-size: 20px;
+				color: #FFD452;
+			}
+			#phone1, #phone2{
+				width: 3em;
+			}
+			#phone3{
+				width: 4em;
+			}
+			#phoneformat{
+				font-family: 'Source Code Pro', Courier, monospace;
+				font-size: 20px;
+				color: #FFD452;
+			}
+		</style>
+	</head>
+
+	<body>
+	
+	<form method="post"action="RegisterServlet">
+		<fieldset id="personal">
+			<legend>Personal Information</legend>
+				<span class='error' id='mainError'></span>
+				
+				<label for="firstName">First Name: </label>
+				<input id='firstname' type="text"name="firstName" /><br />
+				<span class='error' id='firstNameError'></span>
+
+				
+				<label for="lastName">Last Name: </label>
+				<input id='lastname' type="text"name="lastName" /><br />
+				<span class='error' id='lastNameError'></span>
+
+				<label for="email">E-mail: </label>
+				<input id='email' type="email"name="email" /><br />
+				<span class='error' id='emailError'></span>
+
+				<label for="confirmEmail">Confirm E-mail:</label>
+				<input id='confirmEmail' type="email"name="confirmEmail" /><br />
+				<span class='error' id='confirmEmailError'></span>
+
+				<label for="phone1">Telephone: </label>
+				<span id='phoneformat'>
+					(<input id='phone1' type="text"name="phone1">)<input id='phone2' type="text" name="phone2"> - <input id='phone3' type="text"name="phone3"><br />
+				</span>
+				<span class='error' id='phoneError'></span>
+
+				<label for="year">Year: </label>
+				<select name='year'>
+					<option value ="">Select One...</option>
+					<option value="1">One</option>
+					<option value="2">Two</option>
+					<option value="3">Three</option>
+					<option value="4">Four</option>
+				</select><br />
+				<span class='error' id='yearError'></span>
+
+				<label for="major">Major: </label>
+				<select name='major'>
+					<option value ="">Select One...</option>
+					<option value="T127">Computer Programmer Analyst Program (T127)</option>
+					<option value="T141">Computer Systems Technician Program (T141)</option>
+					<option value="T147">Computer Systems Technology Program (T147)</option>
+					<option value="T163">Game Programming Program (T163)</option>
+				</select><br />
+				<span class='error' id='majorError'></span>
+		</fieldset>
+
+		<fieldset id="userfield">
+			<legend>Username</legend>
+				<label for="username">Username: </label>
+				<input id='username' type="text"name="username"/><br />
+				<span class='error' id='usernameError'></span>
+
+				<label for="password">Password: </label>
+				<input type="password"name="password"/><br />
+				<span class='error' id='passwordError'></span>
+				
+				<label for="confirmPassword">Confirm Password: </label>
+				<input type="password"name="confirmPassword"/><br />
+				<span class='error' id='confirmPasswordError'></span>
+		</fieldset>
+
+		<fieldset id="register">
+			<legend>Register</legend>
+				<table id="form">
+				</table>
+				<input type="submit"value="Register">
+		</fieldset>
+	</form>
+</body>
+</html>
