@@ -1,0 +1,176 @@
+package servlet.welcome;
+
+import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+/*
+COMP3095 Web Application Development with Java
+Assignment 1 - Servlets
+Instructor : Sergio Santilli sergio.santilli@georgebrown.ca
+
+by Kazuma Sato 100 948 212 kazuma.sato@georgebrown.ca
+Date: Monday, October 10, 2016
+
+Description:
+	Login Servlet for an online journal
+*/
+
+@WebServlet("/WelcomeServlet")
+public class WelcomeServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		
+		response.setContentType("text/html");
+		response.getWriter().println("This is the welcome page! ");
+		HttpSession session = request.getSession(false);
+		if(session == null){
+			if(checkCookies(request)){
+				startSession(request);
+			} else {
+				request.getRequestDispatcher("LoginServlet");
+				return;
+			}
+		}
+		System.out.println(session.getAttribute("firstname"));
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		
+		doGet(request, response);
+	}
+	private boolean checkCookies(HttpServletRequest request) {
+		
+		final String secret = "K2vJAdF3hJv4nhD3";
+		final String JDBC_Driver = "com.mysql.jdbc.Driver";
+		final String DB_URL = "jdbc:mysql://localhost:3306/comp3095";
+		final String DB_USER = "root";
+		final String DB_PASS = "";
+		final String passwordCookieNameHashed = hashWithSecret("password", secret);
+		String username = "";
+		String passwordCookieValueHashed = "";
+		boolean cookieIsValid = false;
+		Cookie[] cookies;
+
+	    cookies = request.getCookies();
+	    if(cookies != null){
+	    	for(int i = 0; i < cookies.length; i++){
+	    		if(cookies[i].getName() == "username"){
+	    			username = cookies[i].getValue();
+	    		} else if (cookies[i].getName() == passwordCookieNameHashed){
+	    			passwordCookieValueHashed = cookies[i].getValue();
+	    		}
+	    	}
+	    	if(username == "" || passwordCookieValueHashed == ""){
+	    		return false;
+	    	}
+	    	try{
+		    	Class.forName(JDBC_Driver);
+				Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+				PreparedStatement prepSelectStatement = conn.prepareStatement(
+						"SELECT password " +
+						"FROM users " +
+						"WHERE username = ?;");
+				prepSelectStatement.setString(1, username);
+				final ResultSet selectResult  = prepSelectStatement.executeQuery();
+				if(selectResult.next()){
+					cookieIsValid = (hashWithSecret(selectResult.getString("password"), secret) == passwordCookieValueHashed);
+				}
+				prepSelectStatement.close();
+				selectResult.close();
+				conn.close();
+			} catch(NullPointerException ex) {
+				ex.printStackTrace();
+			} catch(SQLException se) {
+				se.printStackTrace();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+	    }
+		return cookieIsValid;
+	}
+	
+	private void startSession(HttpServletRequest request){
+		
+		final String JDBC_Driver = "com.mysql.jdbc.Driver";
+		final String DB_URL = "jdbc:mysql://localhost:3306/comp3095";
+		final String DB_USER = "root";
+		final String DB_PASS = "";
+		String username = "";
+		
+		Cookie[] cookies = request.getCookies();
+    	for(int i = 0; i < cookies.length; i++){
+    		if(cookies[i].getName() == "username"){
+    			username = cookies[i].getValue();
+    		}
+    	}
+		
+		try {
+			Class.forName(JDBC_Driver);
+			Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+		
+			PreparedStatement prepSelectStatement = conn.prepareStatement(
+					"SELECT * " + 
+					"FROM USERS " +
+					"WHERE username = ?");
+			prepSelectStatement.setString(1, username);
+			final ResultSet selectResult  = prepSelectStatement.executeQuery();
+			
+			if(selectResult.next()){
+				int columnCount = selectResult.getMetaData().getColumnCount();
+				HttpSession session = request.getSession(true);
+				
+				String columnName;
+				String columnValue;
+				
+				for(int i = 1; i <= columnCount; i++) {
+					columnName = selectResult.getMetaData().getColumnName(i);
+					columnValue = selectResult.getString(i);
+					session.setAttribute(columnName, new String(columnValue));
+				}
+			}
+		} catch(NullPointerException ex) {
+			ex.printStackTrace();
+		} catch(SQLException se) {
+			se.printStackTrace();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	} 
+	
+    private String hashWithSecret(String value, String secret) {
+    	
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
+            return convertByteArrayToHexString(messageDigest.digest((value + secret).getBytes()));
+        } catch (NoSuchAlgorithmException e) {
+            log("MessageDigest failed " + e);
+            return null;
+        }
+    }
+    
+    private static String convertByteArrayToHexString(byte[] arrayBytes) {
+    	
+        StringBuilder stringBuffer = new StringBuilder();
+        for (byte arrayByte : arrayBytes) {
+            stringBuffer.append(Integer.toString((arrayByte & 0xff) + 0x100, 16).substring(1));
+        }
+        return stringBuffer.toString();
+    }
+}

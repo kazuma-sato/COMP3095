@@ -43,23 +43,25 @@ public class AuthenticateServlet extends HttpServlet {
 		final String secret = "K2vJAdF3hJv4nhD3";
 		
 		boolean authenticationSuccess = false;
-		
 		try {
 			final String username = request.getParameter("username").trim().toLowerCase();
 			final String password = request.getParameter("password").trim();
-			final boolean remember = (request.getParameter("remember").equals(new String("true")));
-			
+			boolean remember = false;
+			if(request.getParameter("remember") == null){
+				remember = false;
+			} else {
+				remember = request.getParameter("remember").equals(new String("true"));
+			}
 			Class.forName(JDBC_Driver);
 			Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 			
-			if(username != "" || username != null){
+			if(username != "" && password != ""){
 				PreparedStatement prepSelectStatement = conn.prepareStatement(
-						"SELECT count(*) "+ 
+						"SELECT count(*) " + 
 						"FROM USERS WHERE username = ?;");
 				prepSelectStatement.setString(1, username);
 				final ResultSet selectResult  = prepSelectStatement.executeQuery();
 				selectResult.next();
-				
 				if (selectResult.getInt(1) != 1) {
 					prepSelectStatement.close();
 					selectResult.close();
@@ -74,7 +76,6 @@ public class AuthenticateServlet extends HttpServlet {
 					final ResultSet loginResult  = prepLoginStatement.executeQuery();
 					
 					authenticationSuccess = loginResult.next();
-					
 					if(authenticationSuccess) {
 						int columnCount = loginResult.getMetaData().getColumnCount();
 						HttpSession session = request.getSession(true);
@@ -87,11 +88,9 @@ public class AuthenticateServlet extends HttpServlet {
 							columnValue = loginResult.getString(i);
 							session.setAttribute(columnName, new String(columnValue));
 						}
-						System.out.println(remember);
 						if(remember) {
 							// I know this isn't good practice
-							Cookie userCookie = new Cookie(
-									hashWithSecret("username", secret), hashWithSecret(username, secret));
+							Cookie userCookie = new Cookie("username", username);
 							Cookie passCookie = new Cookie(
 									hashWithSecret("password", secret), hashWithSecret(password, secret));
 							userCookie.setMaxAge(604800);
@@ -132,7 +131,7 @@ public class AuthenticateServlet extends HttpServlet {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
             return convertByteArrayToHexString(messageDigest.digest((value + secret).getBytes()));
         } catch (NoSuchAlgorithmException e) {
-            log("MessageDigest failed " + e);
+        	e.printStackTrace();
             return null;
         }
     }
