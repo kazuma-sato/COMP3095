@@ -75,7 +75,9 @@ public class RegisterServlet extends HttpServlet {
 				Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 				
 				PreparedStatement prepSelectStatement = conn.prepareStatement(
-						"SELECT count(*) FROM USERS WHERE username = ?;");
+						"SELECT count(*) " + 
+						"FROM users " +
+						"WHERE username = ?;");
 				prepSelectStatement.setString(1, USERNAME);
 				final ResultSet selectResult  = prepSelectStatement.executeQuery();
 				selectResult.next();
@@ -92,9 +94,9 @@ public class RegisterServlet extends HttpServlet {
 				}
 				
 				PreparedStatement prepInsertStatement = conn.prepareStatement(
-						"INSERT INTO `USERS" +
-						"`(`firstname`, `lastname`, `email`, `phone`, `year`, `major`, `username`, `password`)" + 
-								"VALUES (?,?,?,?,?,?,?,?)");
+						"INSERT INTO `USERS`" +
+						"(`firstname`, `lastname`, `email`, `phone`, `year`, `major`, `username`, `password`)" + 
+						"VALUES (?,?,?,?,?,?,?,?)");
 				prepInsertStatement.setString(1, FIRST_NAME);
 				prepInsertStatement.setString(2, LAST_NAME);
 				prepInsertStatement.setString(3, EMAIL);
@@ -105,7 +107,7 @@ public class RegisterServlet extends HttpServlet {
 				prepInsertStatement.setString(8, PASSWORD);
 				
 				if(prepInsertStatement.executeUpdate() == 0) {
-					errors.setMain("Your registration didn't make it to the database.");
+					errors.setMain("Your registration didn't make it to the database. <br>Please try again.");
 					response.getWriter().println(html.print());
 					response.getWriter().println(fillFormWithJS(request));
 					response.getWriter().println(displayErrorsWithJS(errors));

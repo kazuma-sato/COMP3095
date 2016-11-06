@@ -1,0 +1,31 @@
+package servlet.authenticate;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/AuthenticateServlet")
+public class AuthenticateServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		
+		response.setContentType("text/html");
+		final String username = request.getParameter("username").trim().toLowerCase();
+		final String password = request.getParameter("password").trim();
+		final boolean remember = (request.getParameter("remember") == "true");
+		
+		System.out.println("This is just a test.\n" + username + " / " + password + "\nRemember?: " + remember);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+
+		doGet(request, response);
+	}
+
+}

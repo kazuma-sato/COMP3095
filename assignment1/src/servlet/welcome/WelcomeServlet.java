@@ -7,9 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class WelcomeServlet
- */
+/*
+COMP3095 Web Application Development with Java
+Assignment 1 - Servlets
+Instructor : Sergio Santilli sergio.santilli@georgebrown.ca
+
+by Kazuma Sato 100 948 212 kazuma.sato@georgebrown.ca
+Date: Monday, October 10, 2016
+
+Description:
+	Login Servlet for an online journal
+*/
 @WebServlet("/WelcomeServlet")
 public class WelcomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -27,7 +35,7 @@ public class WelcomeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.getWriter().append("This is the welcome screen" + request.getParameter("username"));
 	}
 
 	/**
